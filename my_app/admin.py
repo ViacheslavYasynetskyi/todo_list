@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+
+from my_app.models import Tag, Task
+
+admin.site.register(Tag)
+admin.site.register(Task)
+
