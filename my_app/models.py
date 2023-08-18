@@ -19,4 +19,4 @@ class Task(models.Model):
     )
 
     class Meta:
-        ordering = ["start_date"]
+        ordering = ["status", "-start_date"]

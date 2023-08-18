@@ -1,18 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Todo List</h1>
 
+    <div class="d-flex justify-content-between">
+        <h1 class="pb-4">
+            TODO List
+        </h1>
+        <a href="{% url 'my_app:task-create' %}" class="btn btn-primary m-4">Add task</a>
+
+    </div>
     {% for list in task.all %}
         {% if list.status %}
-            <p>Task: {{ list.content }} Done</p>
-            <p>Created: {{ list.start_date }} Deadline: {{ list.finish_date }}</p>
+            <div class="d-flex justify-content-between mr-4">
+                <p>
+                    <strong>{{ list.content }}</strong>
+                    <strong class="text-success">Done</strong>
+                </p>
+                <a href="{% url 'my_app:change-status' pk=list.id %}" class="btn btn-secondary pt-1 pb-1">Undo</a>
+            </div>
+            <p>Created: {{ list.start_date }} <i class="text-danger">Deadline: {{ list.finish_date }}</i></p>
         {% else %}
-            <p>Task: {{ list.content }} Not done</p>
+            <div class="d-flex justify-content-between mr-4">
+                <p>
+                    <strong>{{ list.content }}</strong>
+                    <strong class="text-danger">Not done</strong>
+                </p>
+                <a href="{% url 'my_app:change-status' pk=list.id %}" class="btn btn-success pt-1 pb-1">Complete</a>
+            </div>
             <p>Created: {{ list.start_date }}</p>
+
         {% endif %}
 
-        <p>Tags: {{ list.tags }}</p>
+        <p class="text-secondary pb-4">
+            Tags: {{ list.tags }}
+            <a href="{% url 'my_app:task-update' pk=list.id %}">Update</a>
+            <a href="{% url 'my_app:task-delete' pk=list.id %}">Delete</a>
+        </p>
     {% endfor %}
 
 

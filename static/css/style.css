@@ -1,3 +1,8 @@
 body {
     margin-top: 20px;
 }
+
+.header__top {
+    display: flex;
+    justify-content: space-between;
+}
