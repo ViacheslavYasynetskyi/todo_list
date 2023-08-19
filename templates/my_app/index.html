@@ -32,9 +32,12 @@
         {% endif %}
 
         <p class="text-secondary pb-4">
-            Tags: {{ list.tags }}
+            {% for tag in task.tags.all %}
+                Tags: {{ tag.name }}
+            {% endfor %}
             <a href="{% url 'my_app:task-update' pk=list.id %}">Update</a>
             <a href="{% url 'my_app:task-delete' pk=list.id %}">Delete</a>
+
         </p>
     {% endfor %}
 

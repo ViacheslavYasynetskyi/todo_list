@@ -1,8 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views import generic
+from django.views import generic, View
 
 from my_app.models import Tag, Task
 
@@ -57,12 +57,13 @@ class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("my_app:index")
 
 
-class TaskChangeStatusView(LoginRequiredMixin, generic.DeleteView):
+class TaskChangeStatusView(LoginRequiredMixin, View):
     model = Task
 
     def post(self, request, *args, **kwargs):
-        task = Task.objects.get(id=self.kwargs["pk"])
+        task = get_object_or_404(Task, id=self.kwargs["pk"])
         if not task.status:
+
             task.status = True
         else:
             task.status = False
