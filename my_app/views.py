@@ -58,12 +58,12 @@ class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 
 class TaskChangeStatusView(LoginRequiredMixin, View):
-    model = Task
+    # model = Task
 
     def post(self, request, *args, **kwargs):
         task = get_object_or_404(Task, id=self.kwargs["pk"])
-        if not task.status:
 
+        if not task.status:
             task.status = True
         else:
             task.status = False

@@ -16,7 +16,9 @@
                     <strong>{{ list.content }}</strong>
                     <strong class="text-success">Done</strong>
                 </p>
-                <a href="{% url 'my_app:change-status' pk=list.id %}" class="btn btn-secondary pt-1 pb-1">Undo</a>
+                <form action="" method="post">
+                    <a href="{% url 'my_app:change-status' pk=list.id %}" class="btn btn-secondary pt-1 pb-1">Undo</a>
+                </form>
             </div>
             <p>Created: {{ list.start_date }} <i class="text-danger">Deadline: {{ list.finish_date }}</i></p>
         {% else %}
@@ -25,23 +27,23 @@
                     <strong>{{ list.content }}</strong>
                     <strong class="text-danger">Not done</strong>
                 </p>
-                <a href="{% url 'my_app:change-status' pk=list.id %}" class="btn btn-success pt-1 pb-1">Complete</a>
+                <form action="" method="post">
+                    <a href="{% url 'my_app:change-status' pk=list.id %}" class="btn btn-success pt-1 pb-1">Complete</a>
+                </form>
             </div>
             <p>Created: {{ list.start_date }}</p>
 
         {% endif %}
 
         <p class="text-secondary pb-4">
-            {% for tag in task.tags.all %}
-                Tags: {{ tag.name }}
+             Tags:
+            {% for tag in list.tags.all %}
+               {{ tag }}
             {% endfor %}
             <a href="{% url 'my_app:task-update' pk=list.id %}">Update</a>
             <a href="{% url 'my_app:task-delete' pk=list.id %}">Delete</a>
 
         </p>
     {% endfor %}
-
-
-
 
 {% endblock %}
