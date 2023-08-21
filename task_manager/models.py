@@ -20,3 +20,7 @@ class Task(models.Model):
 
     class Meta:
         ordering = ["status", "-start_date"]
+
+    def toggle_status(self):
+        self.status = not self.status
+        self.save()

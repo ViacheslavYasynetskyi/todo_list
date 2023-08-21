@@ -1,6 +1,13 @@
 <ul class="sidebar-nav">
+    {% if user.is_authenticated %}
+        <li class="list-group-item">User: {{ user.username }} <br>
+            <a href="{% url 'logout' %}">Logout</a>
+        </li>
+    {% else %}
+        <li class="list-group-item"><a href="{% url 'login' %}">Login</a></li>
+    {% endif %}
 
-    <li class="list-group-item"><a href="{% url 'my_app:index' %}">Home</a></li>
-    <li class="list-group-item"><a href="{% url 'my_app:tag-list' %}">Tags</a></li>
+        <li class="list-group-item"><a href="{% url 'task_manager:index' %}">Home</a></li>
+        <li class="list-group-item"><a href="{% url 'task_manager:tag-list' %}">Tags</a></li>
 
 </ul>

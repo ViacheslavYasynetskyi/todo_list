@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('start_date', models.DateTimeField(auto_now_add=True)),
                 ('finish_date', models.DateTimeField(auto_now=True)),
                 ('status', models.BooleanField(default=False)),
-                ('tags', models.ManyToManyField(related_name='tasks', to='my_app.tag')),
+                ('tags', models.ManyToManyField(related_name='tasks', to='task_manager.tag')),
             ],
         ),
     ]

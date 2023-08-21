@@ -1,10 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic, View
 
-from my_app.models import Tag, Task
+from task_manager.models import Tag, Task
 
 
 def index(request):
@@ -15,7 +15,7 @@ def index(request):
         "task": task,
         "tag": tag,
     }
-    return render(request, "my_app/index.html", context=context)
+    return render(request, "task_manager/index.html", context=context)
 
 
 class TagListView(LoginRequiredMixin, generic.ListView):
@@ -26,46 +26,42 @@ class TagListView(LoginRequiredMixin, generic.ListView):
 class TagCreateView(LoginRequiredMixin, generic.CreateView):
     model = Tag
     fields = "__all__"
-    success_url = reverse_lazy("my_app:tag-list")
+    success_url = reverse_lazy("task_manager:tag-list")
 
 
 class TagUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Tag
     fields = "__all__"
-    success_url = reverse_lazy("my_app:tag-list")
+    success_url = reverse_lazy("task_manager:tag-list")
 
 
 class TagDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Tag
-    success_url = reverse_lazy("my_app:tag-list")
+    success_url = reverse_lazy("task_manager:tag-list")
 
 
 class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     model = Task
     fields = "__all__"
-    success_url = reverse_lazy("my_app:index")
+    success_url = reverse_lazy("task_manager:index")
 
 
 class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Task
     fields = "__all__"
-    success_url = reverse_lazy("my_app:index")
+    success_url = reverse_lazy("task_manager:index")
 
 
 class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Task
-    success_url = reverse_lazy("my_app:index")
+    success_url = reverse_lazy("task_manager:index")
 
 
 class TaskChangeStatusView(LoginRequiredMixin, View):
     # model = Task
 
     def post(self, request, *args, **kwargs):
-        task = get_object_or_404(Task, id=self.kwargs["pk"])
+        task = Task.objects.get(id=self.kwargs["pk"])
+        task.toggle_status()
 
-        if not task.status:
-            task.status = True
-        else:
-            task.status = False
-
-        return redirect("my_app:index")
+        return redirect("task_manager:index")
